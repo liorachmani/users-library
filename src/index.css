@@ -15,7 +15,7 @@ code {
 /* Override antd default behavior because of a bug caused
   by using gutter in antd row causing overflow */
 .ant-row {
-  margin-right: 0 !important;
+  margin-right: 16px !important;
   margin-left: 0 !important;
 }
 
