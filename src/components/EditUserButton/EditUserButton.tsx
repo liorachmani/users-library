@@ -2,12 +2,7 @@ import { Button, Form, Input, message, Modal } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUser, User } from "../../store/usersSlice";
-import {
-  isEmailDuplicate,
-  validateEmail,
-  validateLocation,
-  validateName,
-} from "../../utils/validations";
+import { validateForm } from "../../utils/validations";
 
 function EditUserButton({ user }: { user: User }) {
   const dispatch = useDispatch();
@@ -26,7 +21,8 @@ function EditUserButton({ user }: { user: User }) {
   const [form] = Form.useForm();
 
   const onFinish = (userData: Omit<User, "id" | "image">) => {
-    console.log(userData);
+    if (!validateForm({ ...userData, id: user.id })) return;
+
     // Update redux store
     dispatch(updateUser({ ...user, ...userData }));
 
@@ -34,14 +30,13 @@ function EditUserButton({ user }: { user: User }) {
     message.success("User information has been successfully updated");
   };
 
-  const onError = (errorInfo: any) => {
-    // Handle the form validation errors
-    console.log("Form validation error:", errorInfo);
-  };
-
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{ marginRight: "1rem" }}
+      >
         Edit
       </Button>
       <Modal
@@ -50,73 +45,22 @@ function EditUserButton({ user }: { user: User }) {
         onCancel={handleCancel}
         footer={null}
       >
-        <Form
-          form={form}
-          onFinish={onFinish}
-          layout="vertical"
-          onError={onError}
-        >
-          <Form.Item
-            name="name"
-            label="Name"
-            initialValue={name}
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                min: 3,
-                message: "Please provide a name longer than 3 characters",
-              },
-              // {
-              //   validator: validateName,
-              // },
-            ]}
-          >
+        <Form form={form} onFinish={onFinish} layout="vertical">
+          <Form.Item name="name" label="Name" initialValue={name}>
             <Input placeholder="Enter your name" />
           </Form.Item>
 
-          <Form.Item
-            name="email"
-            label="Email"
-            initialValue={email}
-            rules={[
-              {
-                required: true,
-                message: "Please enter your email",
-              },
-              {
-                type: "email",
-                message: "Please enter a valid email address",
-              },
-              // {
-              //   validator: validateEmail,
-              // },
-              {
-                validator: isEmailDuplicate,
-              },
-            ]}
-          >
+          <Form.Item name="email" label="Email" initialValue={email}>
             <Input placeholder="Enter your email" />
           </Form.Item>
 
-          <Form.Item
-            name="location"
-            label="Location"
-            initialValue={location}
-            rules={[
-              {
-                required: true,
-                message: "Please enter a location",
-              },
-              // {
-              //   validator: validateLocation,
-              // },
-            ]}
-          >
+          <Form.Item name="location" label="Location" initialValue={location}>
             <Input placeholder="Enter your location" />
           </Form.Item>
           <Form.Item style={{ textAlign: "right" }}>
-            <Button onClick={handleCancel}>Cancel</Button>
+            <Button onClick={handleCancel} style={{ marginRight: "1rem" }}>
+              Cancel
+            </Button>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>

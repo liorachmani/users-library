@@ -2,6 +2,7 @@ import { Button, Form, Input, message, Modal } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser, User } from "../../store/usersSlice";
+import { validateForm } from "../../utils/validations";
 
 function NewUserButton() {
   const dispatch = useDispatch();
@@ -18,8 +19,11 @@ function NewUserButton() {
   const [form] = Form.useForm();
 
   const onFinish = (userData: Omit<User, "id">) => {
+    const newId = crypto.randomUUID();
+    if (!validateForm({ ...userData, id: newId })) return;
+
     // Update redux store
-    dispatch(addUser({ ...userData, id: crypto.randomUUID() }));
+    dispatch(addUser({ ...userData, id: newId }));
 
     setIsModalVisible(false);
     message.success("New user added successfully");
@@ -32,7 +36,13 @@ function NewUserButton() {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{
+          backgroundColor: "#3c5c9a",
+        }}
+      >
         Add User
       </Button>
 
@@ -41,68 +51,28 @@ function NewUserButton() {
         open={isModalVisible}
         footer={null}
         onCancel={handleCancel}
-        // onOk={handleSave}
       >
         <Form form={form} onFinish={onFinish} layout="vertical">
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[
-              {
-                required: true,
-                min: 3,
-                message: "Please provide a name longer than 3 characters",
-              },
-            ]}
-          >
+          <Form.Item name="name" label="Name">
             <Input placeholder="Enter your name" />
           </Form.Item>
 
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your email",
-              },
-              {
-                type: "email",
-                message: "Please enter a valid email address",
-              },
-            ]}
-          >
+          <Form.Item name="email" label="Email">
             <Input placeholder="Enter your email" />
           </Form.Item>
 
-          <Form.Item
-            name="location"
-            label="Location"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your location",
-              },
-            ]}
-          >
+          <Form.Item name="location" label="Location">
             <Input placeholder="Enter your location" />
           </Form.Item>
 
-          <Form.Item
-            name="image"
-            label="Image"
-            rules={[
-              {
-                required: true,
-                message: "Please enter the image URL",
-              },
-            ]}
-          >
+          <Form.Item name="image" label="Image">
             <Input placeholder="Enter the image URL" />
           </Form.Item>
 
           <Form.Item style={{ textAlign: "right" }}>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={onReset} style={{ marginRight: "1rem" }}>
+              Reset
+            </Button>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
