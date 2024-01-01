@@ -30,11 +30,6 @@ function EditUserButton({ user }: { user: User }) {
     message.success("User information has been successfully updated");
   };
 
-  const onError = (errorInfo: any) => {
-    // Handle the form validation errors
-    console.log("Form validation error:", errorInfo);
-  };
-
   return (
     <>
       <Button
@@ -44,18 +39,13 @@ function EditUserButton({ user }: { user: User }) {
       >
         Edit
       </Button>
-      <Modal
+      {/* <Modal
         title="Edit User"
         open={isModalVisible}
         onCancel={handleCancel}
         footer={null}
       >
-        <Form
-          form={form}
-          onFinish={onFinish}
-          layout="vertical"
-          onError={onError}
-        >
+        <Form form={form} onFinish={onFinish} layout="vertical">
           <Form.Item name="name" label="Name" initialValue={name}>
             <Input placeholder="Enter your name" />
           </Form.Item>
@@ -76,7 +66,7 @@ function EditUserButton({ user }: { user: User }) {
             </Button>
           </Form.Item>
         </Form>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

@@ -51,7 +51,6 @@ function NewUserButton() {
         open={isModalVisible}
         footer={null}
         onCancel={handleCancel}
-        // onOk={handleSave}
       >
         <Form form={form} onFinish={onFinish} layout="vertical">
           <Form.Item name="name" label="Name">

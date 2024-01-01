@@ -5,7 +5,6 @@ import { UserCard } from "../UserCard";
 
 type UserCardsListProps = {
   users: User[];
-  //   onEdit: (editedUser: User) => void;
 };
 
 function UserCardsList(props: UserCardsListProps) {
