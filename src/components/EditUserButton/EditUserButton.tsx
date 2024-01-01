@@ -41,7 +41,11 @@ function EditUserButton({ user }: { user: User }) {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{ marginRight: "1rem" }}
+      >
         Edit
       </Button>
       <Modal

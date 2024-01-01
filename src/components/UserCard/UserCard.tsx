@@ -30,6 +30,7 @@ const UserCard = (props: UserCardProps) => {
           <strong>UUID:</strong> {user.id}
         </div>
       </div>
+      <br />
       <EditUserButton user={user} />
       <DeleteUserButton id={user.id} />
     </Card>

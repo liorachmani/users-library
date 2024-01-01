@@ -32,7 +32,13 @@ function NewUserButton() {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{
+          backgroundColor: "#3c5c9a",
+        }}
+      >
         Add User
       </Button>
 
@@ -102,7 +108,9 @@ function NewUserButton() {
           </Form.Item>
 
           <Form.Item style={{ textAlign: "right" }}>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={onReset} style={{ marginRight: "1rem" }}>
+              Reset
+            </Button>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
