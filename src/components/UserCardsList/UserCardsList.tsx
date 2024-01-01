@@ -13,7 +13,7 @@ function UserCardsList(props: UserCardsListProps) {
   return (
     <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
       {users.map((user) => (
-        <Col span={6} key={user.id}>
+        <Col key={user.id} xs={24} sm={12} md={8} lg={6}>
           <UserCard user={user} />
         </Col>
       ))}
