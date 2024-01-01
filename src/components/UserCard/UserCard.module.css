@@ -1,0 +1,26 @@
+.userCard {
+  width: 100%;
+  margin: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 3px solid #d5d3d3;
+}
+
+.imageContainer {
+  margin-bottom: 16px;
+}
+
+.detailsContainer {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.details {
+  margin-bottom: 8px;
+}
