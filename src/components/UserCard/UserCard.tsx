@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Avatar } from "antd";
+import { Card, Avatar, Divider } from "antd";
 import styles from "./UserCard.module.css";
 import { User } from "../../store/usersSlice";
 import { EditUserButton } from "../EditUserButton";
@@ -16,6 +16,7 @@ const UserCard = (props: UserCardProps) => {
       <div className={styles.imageContainer}>
         <Avatar size={80} src={user.image} />
       </div>
+      <Divider />
       <div className={styles.detailsContainer}>
         <div className={styles.details}>
           <strong>Name:</strong> {user.name}
