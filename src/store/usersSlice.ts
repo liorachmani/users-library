@@ -56,16 +56,27 @@ const usersSlice = createSlice({
     },
     updateUser(state: UsersState, action: PayloadAction<User>) {
       const { id, image, ...userInfo } = action.payload;
-      let existingUser = state.users.find((user: User) => user.id === id);
+      const existingUser = state.users.find((user: User) => user.id === id);
 
       if (existingUser) {
         Object.assign(existingUser, userInfo);
       }
     },
+
+    deleteUser(state: UsersState, action: PayloadAction<string>) {
+      const id = action.payload;
+
+      state.users = state.users.filter((user: User) => user.id !== id);
+    },
+
+    addUser(state: UsersState, action: PayloadAction<User>) {
+      state.users.push(action.payload);
+    },
   },
 });
 
-export const { fetchUsersSuccess, updateUser } = usersSlice.actions;
+export const { fetchUsersSuccess, updateUser, deleteUser, addUser } =
+  usersSlice.actions;
 
 export const selectUsers = (state: RootState) => state.users;
 
