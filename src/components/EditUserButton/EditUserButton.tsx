@@ -39,7 +39,7 @@ function EditUserButton({ user }: { user: User }) {
       >
         Edit
       </Button>
-      {/* <Modal
+      <Modal
         title="Edit User"
         open={isModalVisible}
         onCancel={handleCancel}
@@ -66,7 +66,7 @@ function EditUserButton({ user }: { user: User }) {
             </Button>
           </Form.Item>
         </Form>
-      </Modal> */}
+      </Modal>
     </>
   );
 }
