@@ -1,26 +1,81 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ApiUser,
+  fetchUsersSuccess,
+  selectUsers,
+} from "../src/store/usersSlice";
+import axios, { AxiosError } from "axios";
+import { API_URL } from "./constants";
+import {
+  UserCardsList,
+  NewUserButton,
+  Loading,
+  ErrorComponent,
+} from "./components";
+import styles from "./App.module.css";
+import { Row } from "antd";
+import { extractUserInfo } from "./utils/extractUserInfo";
 
-function App() {
+type ApiInfo = {
+  info: {
+    page: number;
+    results: number;
+    seed: string;
+    version: string;
+  };
+  results: ApiUser[];
+};
+
+const App: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  const dispatch = useDispatch();
+  const { users } = useSelector(selectUsers);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const { data }: { data: ApiInfo } = await axios.get(API_URL);
+
+        const usersArr = data.results.map(extractUserInfo);
+
+        setLoading(false);
+
+        // Update the Redux store with the fetched data
+        dispatch(fetchUsersSuccess(usersArr));
+      } catch (error: any | AxiosError) {
+        if (axios.isAxiosError(error)) {
+          const { message, status } = error;
+          setError(`Error => status code ${status} - message: ${message}`);
+        } else {
+          setError(`Error => ${error}`);
+        }
+        setLoading(false);
+      }
+    };
+
+    // Call the fetchUsers function when the component mounts
+    fetchUsers();
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1 className={styles.appHeader}>The Best User Library App</h1>
+
+      <Row justify={"center"}>
+        <NewUserButton />
+      </Row>
+
+      {loading && <Loading />}
+
+      {error && <ErrorComponent error={error} />}
+
+      <UserCardsList users={users} />
+    </>
   );
-}
+};
 
 export default App;
