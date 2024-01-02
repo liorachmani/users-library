@@ -61,9 +61,15 @@ const usersSlice = createSlice({
     updateUser(state: UsersState, action: PayloadAction<User>) {
       const { id, image, ...userInfo } = action.payload;
       const existingUser = state.users.find((user: User) => user.id === id);
+      const existingUserFiltered = state.filteredUsers.find(
+        (user: User) => user.id === id
+      );
 
       if (existingUser) {
         Object.assign(existingUser, userInfo);
+      }
+      if (existingUserFiltered) {
+        Object.assign(existingUserFiltered, userInfo);
       }
     },
 

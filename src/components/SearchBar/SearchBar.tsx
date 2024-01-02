@@ -8,7 +8,9 @@ const { Search } = Input;
 const { Option } = Select;
 
 const SearchBar = () => {
+  // State to indicate what field we are filtering on
   const [searchItem, setSearchItem] = useState<keyof User>("name");
+
   const [searchQuery, setSearchQuery] = useState("");
   const allUsers = useSelector(selectUsers);
   const dispatch = useDispatch();
