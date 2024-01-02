@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Users Library
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a users library management (locally).
 
 ## Available Scripts
 
