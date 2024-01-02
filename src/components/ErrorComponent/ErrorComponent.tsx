@@ -1,7 +1,8 @@
 import { memo } from "react";
+import styles from "./ErrorComponent.module.css";
 
 function ErrorComponent({ error }: { error: string }) {
-  return <p>{error}</p>;
+  return <div className={styles.error}>{error}</div>;
 }
 
 export default memo(ErrorComponent);

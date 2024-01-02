@@ -5,3 +5,4 @@ export * from "./NewUserButton";
 export * from "./DeleteUserButton";
 export * from "./Loading";
 export * from "./ErrorComponent";
+export * from "./SearchBar";

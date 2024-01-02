@@ -41,10 +41,12 @@ export type User = {
 
 type UsersState = {
   users: User[];
+  filteredUsers: User[];
 };
 
 const initialState: UsersState = {
   users: [],
+  filteredUsers: [],
 };
 
 const usersSlice = createSlice({
@@ -53,13 +55,21 @@ const usersSlice = createSlice({
   reducers: {
     fetchUsersSuccess(state: UsersState, action: PayloadAction<User[]>) {
       state.users = action.payload;
+      state.filteredUsers = action.payload;
     },
+
     updateUser(state: UsersState, action: PayloadAction<User>) {
       const { id, image, ...userInfo } = action.payload;
       const existingUser = state.users.find((user: User) => user.id === id);
+      const existingUserFiltered = state.filteredUsers.find(
+        (user: User) => user.id === id
+      );
 
       if (existingUser) {
         Object.assign(existingUser, userInfo);
+      }
+      if (existingUserFiltered) {
+        Object.assign(existingUserFiltered, userInfo);
       }
     },
 
@@ -67,17 +77,32 @@ const usersSlice = createSlice({
       const id = action.payload;
 
       state.users = state.users.filter((user: User) => user.id !== id);
+      state.filteredUsers = state.filteredUsers.filter(
+        (user: User) => user.id !== id
+      );
     },
 
     addUser(state: UsersState, action: PayloadAction<User>) {
       state.users.push(action.payload);
+      state.filteredUsers.push(action.payload);
+    },
+
+    updateFilteredUsers(state: UsersState, action: PayloadAction<User[]>) {
+      state.filteredUsers = action.payload;
     },
   },
 });
 
-export const { fetchUsersSuccess, updateUser, deleteUser, addUser } =
-  usersSlice.actions;
+export const {
+  fetchUsersSuccess,
+  updateUser,
+  deleteUser,
+  addUser,
+  updateFilteredUsers,
+} = usersSlice.actions;
 
-export const selectUsers = (state: RootState) => state.users;
+export const selectUsers = (state: RootState) => state.users.users;
+export const selectFilteredUsers = (state: RootState) =>
+  state.users.filteredUsers;
 
 export default usersSlice.reducer;
