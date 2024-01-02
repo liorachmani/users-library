@@ -1,4 +1,4 @@
-import { Button, Form, Input, message, Modal } from "antd";
+import { Button, Form, Input, message, Modal, Row } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser, User } from "../../store/usersSlice";
@@ -35,7 +35,7 @@ function NewUserButton() {
   };
 
   return (
-    <>
+    <Row justify={"center"}>
       <Button
         type="primary"
         onClick={showModal}
@@ -79,7 +79,7 @@ function NewUserButton() {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </Row>
   );
 }
 
