@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ApiUser,
   fetchUsersSuccess,
-  selectUsers,
+  selectFilteredUsers,
 } from "../src/store/usersSlice";
 import axios, { AxiosError } from "axios";
 import { API_URL } from "./constants";
@@ -12,6 +12,7 @@ import {
   NewUserButton,
   Loading,
   ErrorComponent,
+  SearchBar,
 } from "./components";
 import styles from "./App.module.css";
 import { Row } from "antd";
@@ -32,7 +33,7 @@ const App: React.FC = () => {
   const [error, setError] = useState<string>("");
 
   const dispatch = useDispatch();
-  const { users } = useSelector(selectUsers);
+  const filteredUsers = useSelector(selectFilteredUsers);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,6 +66,8 @@ const App: React.FC = () => {
     <>
       <h1 className={styles.appHeader}>The Best User Library App</h1>
 
+      <SearchBar />
+
       <Row justify={"center"}>
         <NewUserButton />
       </Row>
@@ -73,7 +76,7 @@ const App: React.FC = () => {
 
       {error && <ErrorComponent error={error} />}
 
-      <UserCardsList users={users} />
+      <UserCardsList users={filteredUsers} />
     </>
   );
 };

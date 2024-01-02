@@ -1,0 +1,16 @@
+.searchBarContainer {
+  text-align: center;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.searchBarInput {
+  width: 40%;
+}
+
+.searchBarDropdownMenu {
+  width: 20%;
+  margin-left: 0.5rem;
+  text-align: left;
+}
